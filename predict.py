@@ -3,12 +3,6 @@ from osgeo import gdal
 from scipy import optimize
 import os
 from glob import glob
-from skimage.metrics import mean_squared_error
-from skimage.metrics import peak_signal_noise_ratio
-from skimage.metrics import structural_similarity
-from glob import glob
-import matplotlib.colors as colors
-from matplotlib.patches import Rectangle
 import torch
 from torch.autograd import Variable
 from data.option import parser
@@ -24,15 +18,15 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 def psnr1(img1, img2):
    return 10. * math.log10(1. / ((img1 - img2) ** 2).mean())
 
-model_path=r'/home/smm/code/SR/WSDR_AVHHR/output_MODIS_RF11/WDSR-A-f8-b8-r2-x5-best.pth.tar'
-imgpath0=r'/mnt/lustre/users/smm/SRdata/MODIS_RF11/dataset/val/data/'
-targetpath0=r'/mnt/lustre/users/smm/SRdata/MODIS_RF11/dataset/val/target/'
-savepath=r'/mnt/lustre/users/smm/SRdata/MODIS_RF11/testdataWDSR'
+model_path=r'/HPSR-x5-best.pth.tar'
+imgpath=r'/dataset/val/data/'
+targetpath=r'/dataset/val/target/'
+savepath=r'/testdata'
 imgnamelist=natsorted(glob('%s/*.npy'%imgpath0))
 if not os.path.exists(savepath):
    os.makedirs(savepath)
 args = parser.parse_args()
-srmodel = WDSR_A0(args)
+srmodel = HPSRnet(args)
 checkpoint = torch.load(model_path)
 state_dict = checkpoint['state_dict']#
 model_dict=srmodel.state_dict()
