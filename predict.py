@@ -5,9 +5,9 @@ import os
 from glob import glob
 import torch
 from torch.autograd import Variable
-from data.option import parser
+from dataset.option import parser
 from model.HPSR import HPSRnet
-from data.dataset import HPSRdataset
+from dataset.dataset import HPSRdataset
 import numpy as np
 import math
 import cv2
